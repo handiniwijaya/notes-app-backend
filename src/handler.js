@@ -42,26 +42,25 @@ const getAllNotesHandler = () => ({
   }
 })
 
-const getNoteFromID = (req, h) => {
-  const { id } = req.params
+const getNoteFromID = (request, h) => {
+  const { id } = request.params
 
   const note = notes.filter((n) => n.id === id)[0]
 
-  if (note) {
-    const response = h.response({
+  if (note !== undefined) {
+    return {
       status: 'success',
       data: {
         note
       }
-    })
-    response.code(200)
+    }
   }
 
   const response = h.response({
     status: 'fail',
-    message: 'Note not found'
+    message: 'Catatan tidak ditemukan'
   })
-  response.code(500)
+  response.code(404)
   return response
 }
 
