@@ -58,7 +58,7 @@ const getNoteFromID = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan tidak ditemukan'
+    message: 'note not found'
   })
   response.code(404)
   return response
