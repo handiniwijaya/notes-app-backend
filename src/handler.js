@@ -65,4 +65,60 @@ const getNoteFromID = (req, h) => {
   return response
 }
 
-module.exports = { addNoteHandler, getAllNotesHandler, getNoteFromID }
+const updateNoteHandler = (req, h) => {
+  const { id } = req.params
+
+  const { title, tags, body } = req.payload
+  const updatedAt = new Date().toISOString()
+
+  const index = notes.findIndex((n) => n.id === id)
+
+  if (index !== -1) {
+    notes[index] = {
+      ...notes[index],
+      title,
+      tags,
+      body,
+      updatedAt
+    }
+
+    const response = h.response({
+      status: 'success',
+      message: 'Note updated successfully'
+    })
+    response.code(201)
+    return response
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'note not found'
+  })
+  response.code(404)
+  return response
+}
+
+const deleteNoteHandler = (req, h) => {
+  const { id } = req.params
+
+  const index = notes.findIndex((n) => n.id === id)
+
+  if (index !== -1) {
+    notes.splice(index, 1)
+
+    const response = h.response({
+      status: 'success',
+      message: 'Note deleted successfully'
+    })
+    response.code(201)
+    return response
+  }
+  const response = h.response({
+    status: 'fail',
+    message: 'Note not found'
+  })
+  response.code(404)
+  return response
+}
+
+module.exports = { addNoteHandler, getAllNotesHandler, getNoteFromID, updateNoteHandler, deleteNoteHandler }
