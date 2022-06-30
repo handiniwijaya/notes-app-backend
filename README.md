@@ -1,2 +1,2 @@
-# hapi-nodejs-backend
-first try make backend app with js
+# NOTES-APP-BACKEND
+make with javaScript
